@@ -3,6 +3,7 @@ package colorblindness;
 import java.awt.EventQueue;
 import java.awt.Image;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -23,6 +24,7 @@ import java.awt.Label;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 
 public class Ventana {
 
@@ -73,7 +75,7 @@ public class Ventana {
 		lblColorblindnessProjectGoogle.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		lblColorblindnessProjectGoogle.setBackground(Color.WHITE);
 		lblColorblindnessProjectGoogle.setForeground(new Color(139, 0, 0));
-		lblColorblindnessProjectGoogle.setBounds(166, 35, 534, 44);
+		lblColorblindnessProjectGoogle.setBounds(166, 35, 503, 44);
 		frame.getContentPane().add(lblColorblindnessProjectGoogle);
 		
 		JLabel label = new JLabel("");
@@ -112,20 +114,7 @@ public class Ventana {
 		
 		
 		
-		JButton btnProcesar = new JButton("Procesar");
-		btnProcesar.setBackground(new Color(30,144,255));
-		btnProcesar.setForeground(Color.DARK_GRAY);
-		btnProcesar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// boton Procesar
-				colorblindness.daltonize(1,ruta,rutaS,false);
-				Toolkit tool = Toolkit.getDefaultToolkit();
-				Image imagen=tool.createImage(rutaS);
-				label_1.setIcon(new ImageIcon(imagen.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_AREA_AVERAGING)));
-			}
-		});
-		btnProcesar.setBounds(327, 499, 109, 23);
-		frame.getContentPane().add(btnProcesar);
+	
 		
 		JLabel lblImagenOriginal = new JLabel("Imagen Original");
 		lblImagenOriginal.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -136,8 +125,74 @@ public class Ventana {
 		JLabel lblImagenProcesada = new JLabel("Imagen Procesada");
 		lblImagenProcesada.setForeground(new Color(0, 128, 0));
 		lblImagenProcesada.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblImagenProcesada.setBounds(530, 121, 170, 18);
+		lblImagenProcesada.setBounds(530, 121, 139, 18);
 		frame.getContentPane().add(lblImagenProcesada);
+		
+		JRadioButton t3 = new JRadioButton("Tritanopia");
+		t3.setBounds(317, 503, 109, 23);
+		frame.getContentPane().add(t3);
+		
+		JRadioButton t1 = new JRadioButton("Protanopia");
+		t1.setBounds(317, 451, 109, 23);
+		frame.getContentPane().add(t1);
+		
+		JRadioButton t2 = new JRadioButton("Deuteranopia");
+		t2.setBounds(317, 477, 109, 23);
+		frame.getContentPane().add(t2);
+		
+		JLabel lblTipoDeDalt = new JLabel("type of color blindness");
+		lblTipoDeDalt.setForeground(new Color(70, 130, 180));
+		lblTipoDeDalt.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblTipoDeDalt.setBounds(281, 422, 174, 18);
+		frame.getContentPane().add(lblTipoDeDalt);
+		ButtonGroup group = new ButtonGroup();
+		group.add(t1);
+		group.add(t2);
+		group.add(t3);
+		JButton btnProcesar = new JButton("Procesar");
+		btnProcesar.setBackground(new Color(30, 144, 255));
+		btnProcesar.setForeground(Color.DARK_GRAY);
+		btnProcesar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// boton Procesar
+				
+				if(t2.isSelected())
+				{
+					label_1.setIcon(new ImageIcon());
+					colorblindness.daltonize(2,ruta,rutaS,false);
+
+				}
+				else if(t3.isSelected())
+				{
+					label_1.setIcon(null);
+					colorblindness.daltonize(3,ruta,rutaS,false);
+
+				}
+				else
+				{
+					label_1.setIcon(null);
+					colorblindness.daltonize(1,ruta,rutaS,true);
+
+				}
+				Toolkit tool = Toolkit.getDefaultToolkit();
+				Image imagen=tool.createImage(rutaS);
+				label_1.setIcon(new ImageIcon(imagen.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_AREA_AVERAGING)));
+			}
+		});
+		
+		btnProcesar.setBounds(491, 477, 89, 23);
+		frame.getContentPane().add(btnProcesar);
+		
+		JButton bclean = new JButton("Clean");
+		bclean.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				label_1.setIcon(null);
+			}
+		});
+		bclean.setForeground(Color.DARK_GRAY);
+		bclean.setBackground(new Color(30, 144, 255));
+		bclean.setBounds(138, 491, 89, 23);
+		frame.getContentPane().add(bclean);
 		
 		
 	}
